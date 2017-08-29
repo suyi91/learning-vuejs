@@ -8,21 +8,29 @@
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
-  <div id="app-1">
-    v-html的例子 <span v-html="rawHtml"></span>
-    <br/> 双大括号的例子 <span>{{ rawHtml }}</span>
+  <div id="app-2">
+    <div v-bind:class="className">
+      绑定了"border-red"class的div
+    </div>
+    <div>
+      没有绑定"border-red"class的div
+    </div>
+    <input type="text" v-bind:disabled="inputDisabled" value="未disabled">
+    <br />
+    <input type="text" v-bind:disabled="!inputDisabled" value="已disabled">
   </div>
   <script>
-    var app1 = new Vue({
-      el: '#app-1',
+    var app2 = new Vue({
+      el: '#app-2',
       data: {
-        rawHtml: '<span class="font-red">这是一段测试html代码</span>'
+        className: 'border-red',
+        inputDisabled: false
       },
     })
   </script>
   <style>
-    .font-red {
-      color: red;
+    .border-red {
+      border: 1px solid red;
     }
   </style>
 </body>
