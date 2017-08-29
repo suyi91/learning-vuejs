@@ -8,30 +8,29 @@
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
-  <div id="app-2">
-    <div v-bind:class="className">
-      绑定了"border-red"class的div
-    </div>
-    <div>
-      没有绑定"border-red"class的div
-    </div>
-    <input type="text" v-bind:disabled="inputDisabled" value="未disabled">
+  <div id="app-3">
+    <input v-model="name" type="text">
+    <br /> 输入的内容将被一个字一个字的隔开
+    <span>{{ name | splitChars }}</span>
+    <br /> 隔开后首尾将加上大括号
+    <span>{{ name | splitChars | surroundStr }}</span>
     <br />
-    <input type="text" v-bind:disabled="!inputDisabled" value="已disabled">
   </div>
   <script>
-    var app2 = new Vue({
-      el: '#app-2',
+    var app3 = new Vue({
+      el: '#app-3',
       data: {
-        className: 'border-red',
-        inputDisabled: false
+        name: ''
       },
+      filters: {
+        splitChars(val) {
+          return val.trim().split('').join(' ');
+        },
+        surroundStr(val) {
+          return `{${val}}`;
+        }
+      }
     })
   </script>
-  <style>
-    .border-red {
-      border: 1px solid red;
-    }
-  </style>
 </body>
 </html>
