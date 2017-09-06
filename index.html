@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lesson3</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <report-icon class="report-icon" v-for="item in items" :background-color="item.backgroundColor" :text="item.text" :icon="item.icon"
+      @click="clickIcon(item)"></report-icon>
+  </div>
+  <script>
+    Vue.component('report-icon', {
+      template: `
+        <a :style="{'background-color': backgroundColor}" :class="{'is-hover': isHover}" @mouseover="onMouseOver" @mouseout="onMouseOut" @click="click">
+          <i class="material-icons">{{ icon }}</i>
+          <p>{{ text }}</p>
+        </a>
+      `,
+      props: {
+        backgroundColor: {
+          default: 'red',
+          type: String
+        },
+        text: {
+          default: '',
+          type: String
+        },
+        icon: {
+          default: '',
+          type: String
+        },
+      },
+      data() {
+        return {
+          isHover: false
+        }
+      },
+      methods: {
+        onMouseOver() {
+          this.isHover = true
+        },
+        onMouseOut() {
+          this.isHover = false
+        },
+        click() {
+          this.$emit('click')
+        }
+      },
+    })
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        items: [{
+          backgroundColor: 'blue',
+          text: '报表1',
+          icon: 'android'
+        }, {
+          backgroundColor: 'green',
+          text: '报表2',
+          icon: 'assignment_turned_in'
+        }, {
+          backgroundColor: 'red',
+          text: '报表3',
+          icon: 'book'
+        }]
+      },
+      methods: {
+        clickIcon(item) {
+          alert(`收到了组件传来的的点击事件: 点击了${item.text}`)
+        }
+      }
+    })
+  </script>
+  <style scoped>
+      .report-icon {
+        width: 100px;
+        display: block;
+        float: left;
+        margin-left: 10px;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+
+      .is-hover {
+        filter: grayscale(.6) drop-shadow(5px 5px 5px #ccc)
+      }
+    </style>
+</body>
+
+</html>
